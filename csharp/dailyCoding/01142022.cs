@@ -50,10 +50,10 @@ public class ListNode
 		if (items == null)
 			return null;
 		// we keep track of a previous to make sure we set the next listnode
-		ListNode head = new ListNode(items[0]);
+		ListNode head = new ListNode(items[items.Length - 1]);
 		ListNode previous = head;
 		// iterate through the items given
-		for(int i = 1; i < items.Length; i++)
+		for(int i = items.Length - 2; i >= 0; i--)
 		{
 			// make a new node and set previous to it
 			ListNode temp = new ListNode(items[i]);
@@ -69,22 +69,22 @@ public class ListNode
 	/// <returns></returns>
 	public static ListNode Make(int number)
 	{
-		return Make(SplitNumber(number));
+		return Make(SplitDigits(number));
 	}
 	/// <summary>
 	/// Splits a number into an array by each digit.
 	/// </summary>
 	/// <param name="number"></param>
 	/// <returns></returns>
-	public static int[] SplitNumber(int number)
+	public static int[] SplitDigits(int number)
 	{
-		// split the number with no separator
-		string[] split = number.ToString().Split("");
-		int[] sender = new int[split.Length];
-		// build the array from parsing each string
-		for (int i = 0; i < split.Length; i++){
-			sender[i] = int.Parse(split[i]);
+		List<int> listOfInts = new List<int>();
+		while (number > 0)
+		{
+			listOfInts.Add(number % 10);
+			number = number / 10;
 		}
-		return sender;
+		listOfInts.Reverse();
+		return listOfInts.ToArray();
 	}
 }
