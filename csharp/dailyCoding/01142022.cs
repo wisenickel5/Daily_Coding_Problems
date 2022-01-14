@@ -18,9 +18,9 @@ public class _01142022
 	static ListNode AddTwoNumbers(ListNode l1, ListNode l2)
 	{
 		// Get the converted numbers
-		int l1num = int.Parse(Build(l1));
-		int l2num = int.Parse(Build(l2));
-		int sum = l1num + l2num;
+		long l1num = long.Parse(Build(l1));
+		long l2num = long.Parse(Build(l2));
+		long sum = l1num + l2num;
 		return ListNode.Make(sum);
 	}
 	// Recursive string builder
@@ -47,27 +47,32 @@ public class ListNode
 	/// <returns></returns>
 	public static ListNode Make(params int[] items)
 	{
-		if (items == null)
-			return null;
-		// we keep track of a previous to make sure we set the next listnode
-		ListNode head = new ListNode(items[items.Length - 1]);
-		ListNode previous = head;
-		// iterate through the items given
-		for(int i = items.Length - 2; i >= 0; i--)
+		try
 		{
-			// make a new node and set previous to it
-			ListNode temp = new ListNode(items[i]);
-			previous.next = temp;
-			previous = temp;
+			// we keep track of a previous to make sure we set the next listnode
+			ListNode head = new ListNode(items[items.Length - 1]);
+			ListNode previous = head;
+			// iterate through the items given
+			for (int i = items.Length - 2; i >= 0; i--)
+			{
+				// make a new node and set previous to it
+				ListNode temp = new ListNode(items[i]);
+				previous.next = temp;
+				previous = temp;
+			}
+			return head;
 		}
-		return head;
+		catch
+		{
+			return new ListNode();
+		}
 	}
 	/// <summary>
 	/// Returns the head of a ListNode structure from an int.
 	/// </summary>
 	/// <param name="items"></param>
 	/// <returns></returns>
-	public static ListNode Make(int number)
+	public static ListNode Make(long number)
 	{
 		return Make(SplitDigits(number));
 	}
@@ -76,12 +81,12 @@ public class ListNode
 	/// </summary>
 	/// <param name="number"></param>
 	/// <returns></returns>
-	public static int[] SplitDigits(int number)
+	public static int[] SplitDigits(long number)
 	{
 		List<int> listOfInts = new List<int>();
 		while (number > 0)
 		{
-			listOfInts.Add(number % 10);
+			listOfInts.Add((int)(number % 10));
 			number = number / 10;
 		}
 		listOfInts.Reverse();
