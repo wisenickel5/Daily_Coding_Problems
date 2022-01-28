@@ -9,9 +9,11 @@
 # The input [1, 2, 0] should give 3.
 # You can modify the input array in-place.
 
-def SmallestMissingInt(arr):
-    return arr
+def SmallestMissingInt(arr) -> int:
+    
+    return arr[-1]
 
 if __name__ == "__main__":
-    arr = [1, 2, 0]
-    SmallestMissingInt(arr)
+    arr = [3, 4, -1, 1]
+    missingInt = SmallestMissingInt(arr)
+    print(missingInt)
