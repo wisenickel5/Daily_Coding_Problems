@@ -17,9 +17,10 @@ def AutoComplete(s: str, arr: list[str]) -> list[str]:
 	results = []
 	for idx, word in enumerate(arr):
 		for s_char, word_char in enumerate(zip(s, word)):
-			if idx > 0 and s_char == word_char:
-				results.append(word)
-				arr.pop(word)
+			if idx > 0: # We can't autocomplete a word if only the first letters match
+				if s_char == word_char:
+					results.append(word)
+					arr.pop(word)
 	return results
 
 if __name__ == "__main__":
