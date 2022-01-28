@@ -14,6 +14,14 @@ class LogDataStructure:
 		self.curr_idx = 0
 	
 	def record(self, order_id: int) -> None:
+		"""Records Order Ids by stacking order ids that are
+		recieved as arguements and then increments the current
+		index by 1 until the current index == max_size, where
+		curr_idx is reset to 0.
+
+		Args:
+			order_id (int)
+		"""
 		self.circular_buffer[self.curr_idx] = order_id
 		self.curr_idx = (self.curr_idx + 1) % self.max_size
 	
