@@ -18,9 +18,9 @@ public class _01142022
 	static ListNode AddTwoNumbers(ListNode l1, ListNode l2)
 	{
 		// Get the converted numbers
-		int l1num = int.Parse(Build(l1));
-		int l2num = int.Parse(Build(l2));
-		int sum = l1num + l2num;
+		long l1num = long.Parse(Build(l1));
+		long l2num = long.Parse(Build(l2));
+		long sum = l1num + l2num;
 		return ListNode.Make(sum);
 	}
 	// Recursive string builder
@@ -47,44 +47,49 @@ public class ListNode
 	/// <returns></returns>
 	public static ListNode Make(params int[] items)
 	{
-		if (items == null)
-			return null;
-		// we keep track of a previous to make sure we set the next listnode
-		ListNode head = new ListNode(items[0]);
-		ListNode previous = head;
-		// iterate through the items given
-		for(int i = 1; i < items.Length; i++)
+		try
 		{
-			// make a new node and set previous to it
-			ListNode temp = new ListNode(items[i]);
-			previous.next = temp;
-			previous = temp;
+			// we keep track of a previous to make sure we set the next listnode
+			ListNode head = new ListNode(items[items.Length - 1]);
+			ListNode previous = head;
+			// iterate through the items given
+			for (int i = items.Length - 2; i >= 0; i--)
+			{
+				// make a new node and set previous to it
+				ListNode temp = new ListNode(items[i]);
+				previous.next = temp;
+				previous = temp;
+			}
+			return head;
 		}
-		return head;
+		catch
+		{
+			return new ListNode();
+		}
 	}
 	/// <summary>
 	/// Returns the head of a ListNode structure from an int.
 	/// </summary>
 	/// <param name="items"></param>
 	/// <returns></returns>
-	public static ListNode Make(int number)
+	public static ListNode Make(long number)
 	{
-		return Make(SplitNumber(number));
+		return Make(SplitDigits(number));
 	}
 	/// <summary>
 	/// Splits a number into an array by each digit.
 	/// </summary>
 	/// <param name="number"></param>
 	/// <returns></returns>
-	public static int[] SplitNumber(int number)
+	public static int[] SplitDigits(long number)
 	{
-		// split the number with no separator
-		string[] split = number.ToString().Split("");
-		int[] sender = new int[split.Length];
-		// build the array from parsing each string
-		for (int i = 0; i < split.Length; i++){
-			sender[i] = int.Parse(split[i]);
+		List<int> listOfInts = new List<int>();
+		while (number > 0)
+		{
+			listOfInts.Add((int)(number % 10));
+			number = number / 10;
 		}
-		return sender;
+		listOfInts.Reverse();
+		return listOfInts.ToArray();
 	}
 }
