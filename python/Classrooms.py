@@ -5,6 +5,7 @@
 # the minimum number of rooms required.
 # Assume the left tuple value will always be less than the right
 # For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
+# Solution inspired by https://gist.github.com/folksilva/46a756979a4b4cedc841fbeb3193f181
 
 def minimum_rooms(lectures: list[(int, int)]) -> int:
 	if len(lectures) == 0:
@@ -25,7 +26,7 @@ def minimum_rooms(lectures: list[(int, int)]) -> int:
 
 	while (start_idx < len(starting_times) or end_idx < len(ending_times)):
 		# Don't traverse through the ending times if all the starting times rooms are used
-		if (start_idx > len(starting_times)): break
+		if (start_idx >= len(starting_times)): break
 
 		if (starting_times[start_idx] < ending_times[end_idx]):
 			curr_rooms += 1
