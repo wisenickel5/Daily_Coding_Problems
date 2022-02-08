@@ -16,24 +16,39 @@ class LogDataStructure:
 	def record(self, order_id: int) -> None:
 		"""Records Order Ids by stacking order ids that are
 		recieved as arguements and then increments the current
-		index by 1 until the current index == max_size, where
-		curr_idx is reset to 0.
+		index property by 1 until the current index == max_size,
+		where curr_idx is reset to 0.
 
 		Args:
 			order_id (int)
 		"""
+		# Use the circular buffer to stack the orderIds
 		self.circular_buffer[self.curr_idx] = order_id
 		self.curr_idx = (self.curr_idx + 1) % self.max_size
 	
 	def get_last(self, idx: int) -> int:
+		"""Gets the ith last element from the log. 
+
+		Args:
+			idx (int): index
+
+		Returns:
+			int: ith last element in the Log 
+		"""
+		
+		# The 
 		divider = self.curr_idx - idx + self.max_size
-		res = self.circular_buffer[divider % self.max_size]
-		print(res)
+		indice = divider % self.max_size
+		res = self.circular_buffer[indice]
 		return res
 
 if __name__ == "__main__":
-	lds = LogDataStructure(3)
-	id1 = LogDataStructure.record(lds, 100)
-	id2 = LogDataStructure.record(lds, 111)
-	id3 = LogDataStructure.record(lds, 222)
-	last = LogDataStructure.get_last(lds, 2)
+	lds = LogDataStructure(4)
+	id0 = LogDataStructure.record(lds, 100)
+	id1 = LogDataStructure.record(lds, 111)
+	id2 = LogDataStructure.record(lds, 222)
+	id3 = LogDataStructure.record(lds, 333)
+	
+	index = 3
+	last = LogDataStructure.get_last(lds, index)
+	print(f"Index: {str(index)}" + f"\nLast Element: {str(last)}")
