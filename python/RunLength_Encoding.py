@@ -16,12 +16,20 @@ def runLength_Encoding(s: str) -> str:
         result = str(1) + s
 
     elif len(s) > 1:
-        for char in s:
-            
+        counter = 1
+        for idx, char in enumerate(s):
+            if idx >= 1:
+                if char == s[idx - 1]:
+                    counter += 1
+                elif char != s[idx - 1]:
+                    result = result + f"{counter}{s[idx - 1]}"
+                    counter = 1
+            if idx == len(s) - 1:
+                result = result + f"{counter}{s[idx - 1]}"
 
     return result
 
 if __name__ == "__main__":
-    code = "A"
+    code = "AAAABBBCCDAAß"
     new_code = runLength_Encoding(code)
     print(new_code)
