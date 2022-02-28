@@ -1,8 +1,10 @@
-# Daily Coding Problems
+'''
+Completed by Dylan Alexander on 01/12/2022
+Given a list of numbers and a number k, 
+return whether any two numbers from the 
+list add up to k.
+'''
 
-# Given a list of numbers and a number k, 
-# return whether any two numbers from the 
-# list add up to k. (01/12/2022)
 def BruteForceTwoSum(arr, k):
     targetLen = len(arr)
     for i in range(0, targetLen):
