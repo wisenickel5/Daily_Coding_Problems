@@ -18,39 +18,40 @@ def brute_force_inversions(arr: list[int]) -> tuple([ int, list[tuple([int, int]
 			if arr[i] > arr[j]:
 				if i < j:
 					counter += 1
-					sender.append(tuple([arr[j], arr[i]]))
+					sender.append(tuple([arr[i], arr[j]]))
 	return tuple([counter, sender])
 
-def optimal_inversions(arr: list[int]) -> tuple([ int, list[tuple([int, int])] ]):
+def optimal_inversions(arr: list[int]):
 	if len(arr) == 1:
-		return tuple([0, arr])
+		return tuple([0, arr, []])
 	else:
-		sender, counter = [], 0
+		sorted_arr, counter = [], 0
 		middle_idx = int(len(arr) / 2)
 		left_side = arr[:middle_idx]
 		right_side = arr[middle_idx:]
 
-		left_idx, left_side = optimal_inversions(left_side)
-		right_idx, right_side = optimal_inversions(right_side)
+		left_idx, left_side, inversions = optimal_inversions(left_side)
+		right_idx, right_side, inversions = optimal_inversions(right_side)
 
 		i, j = 0, 0
 		counter = 0 + left_idx + right_idx
 
 		while i < len(left_side) and j < len(right_side):
 			if left_side[i] <= right_side[j]:
-				sender.append(left_side[i])
+				sorted_arr.append(left_side[i])
 				i += 1
 			else: 
-				sender.append(right_side[j])
+				sorted_arr.append(right_side[j])
+				inversions.append(tuple([left_side[i], right_side[j]]))
 				j += 1
 				counter += len(left_side) - i
 
-		sender += left_side[i:]
-		sender += right_side[j:]
-		return tuple([counter, sender])
+		sorted_arr += left_side[i:]
+		sorted_arr += right_side[j:]
+		return tuple([counter, sorted_arr, inversions])
 
 if __name__ == "__main__":
-	arr = [5, 4, 3, 2, 1]
+	arr = [2, 4, 1, 3, 5]
 	
 	brute_results = brute_force_inversions(arr)
 	print("Brute Force Results: " + f"\nInversions Count: {brute_results[0]}")
@@ -59,5 +60,5 @@ if __name__ == "__main__":
 
 	optimized_results = optimal_inversions(arr)
 	print("\n\nOptimized Results: " + f"\nInversions Count: {optimized_results[0]}")
-	for i in range(1, len(optimized_results)):
+	for i in range(2, len(optimized_results)):
 		print(f"{optimized_results[i]}", end=" ")
