@@ -30,6 +30,6 @@ def runLength_Encoding(s: str) -> str:
     return result
 
 if __name__ == "__main__":
-    code = "AAAABBBCCDAAß"
+    code = "AAAABBBCCDAAB"
     new_code = runLength_Encoding(code)
     print(new_code)
