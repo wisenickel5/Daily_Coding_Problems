@@ -97,6 +97,21 @@ class SLinkedList:
 
 		raise Exception(f'Node with data: {target_data} was not found')
 
+	def concat_LL(self, target_data: object, new_node: Node) -> None:
+		if self.head is None:
+			raise L_L_Exception("Linked List is empty.")
+		
+		for node in self:
+			if node.data == target_data:
+				new_node.next = node.next
+				node.next = new_node
+				if node: # If this is not the last node continue "Adding after"
+					return
+				else:
+					return
+
+		raise Exception(f'Node with data: {target_data} was not found')
+
 	def remove_node(self, target_data: Node) -> None:
 		if self.head is None:
 			raise L_L_Exception("Linked List is empty.")
@@ -169,8 +184,9 @@ class Two_LinkedList_Operations():
 			temp_ptr = temp_ptr.next
 
 		temp_ptr.next = LL1_head or LL2_head
+		newLL = SLinkedList([head_ptr.data]).add_after(head_ptr.data, head_ptr.next)
 
-		return head_ptr
+		return newLL
 
 	def recurs_merge_2LL(self) -> SLinkedList:
 		LL1_head = self.LL1.head
@@ -204,6 +220,6 @@ if __name__ == "__main__":
 	print(ll2.__repr__())
 	ll3 = SLinkedList(nodes=[2,4,6,8])
 	print(ll3.__repr__() + "\nMerging Linked Lists...\n")
-	ll4_head = Two_LinkedList_Operations(ll2, ll3).merge_2LL()
-	print(ll4_head.next)
+	ll4 = Two_LinkedList_Operations(ll2, ll3).merge_2LL()
+	print(ll4.__repr__())
 
