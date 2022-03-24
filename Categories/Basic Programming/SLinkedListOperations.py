@@ -97,18 +97,14 @@ class SLinkedList:
 
 		raise Exception(f'Node with data: {target_data} was not found')
 
-	def concat_LL(self, target_data: object, new_node: Node) -> None:
+	def concat_LL(self, target_data: object, head_ptr: Node) -> None:
 		if self.head is None:
 			raise L_L_Exception("Linked List is empty.")
-		
-		for node in self:
-			if node.data == target_data:
-				new_node.next = node.next
-				node.next = new_node
-				if node: # If this is not the last node continue "Adding after"
-					return
-				else:
-					return
+
+		node = head_ptr.next
+		if target_data == head_ptr.data: # Were on the first node
+			self.head.next = node
+			return
 
 		raise Exception(f'Node with data: {target_data} was not found')
 
@@ -184,7 +180,7 @@ class Two_LinkedList_Operations():
 			temp_ptr = temp_ptr.next
 
 		temp_ptr.next = LL1_head or LL2_head
-		newLL = SLinkedList([head_ptr.data]).add_after(head_ptr.data, head_ptr.next)
+		newLL = SLinkedList([head_ptr.data]).concat_LL(head_ptr.data, head_ptr)
 
 		return newLL
 
