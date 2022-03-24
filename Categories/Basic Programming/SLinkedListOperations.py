@@ -97,14 +97,14 @@ class SLinkedList:
 
 		raise Exception(f'Node with data: {target_data} was not found')
 
-	def concat_LL(self, target_data: object, head_ptr: Node) -> None:
+	def concat(self, target_data: object, head_ptr: Node) -> None:
 		if self.head is None:
 			raise L_L_Exception("Linked List is empty.")
 
 		node = head_ptr.next
 		if target_data == head_ptr.data: # Were on the first node
-			self.head.next = node
-			return
+			self.head.next = node # Why?
+			return self
 
 		raise Exception(f'Node with data: {target_data} was not found')
 
@@ -144,7 +144,7 @@ class Two_LinkedList_Operations():
 		self.LL1 = linked_list1
 		self.LL2 = linked_list2
 
-	def merge_2LL(self) -> Node:
+	def merge(self) -> SLinkedList:
 		"""Merge 2 Sorted Linked Lists.
 		Reference: https://stackoverflow.com/questions/22507197/merging-two-sorted-linked-lists-into-one-linked-list-in-python
 
@@ -180,29 +180,30 @@ class Two_LinkedList_Operations():
 			temp_ptr = temp_ptr.next
 
 		temp_ptr.next = LL1_head or LL2_head
-		newLL = SLinkedList([head_ptr.data]).concat_LL(head_ptr.data, head_ptr)
+		newLL = SLinkedList([head_ptr.data]).concat(head_ptr.data, head_ptr)
 
 		return newLL
 
-	def recurs_merge_2LL(self) -> SLinkedList:
-		LL1_head = self.LL1.head
-		LL2_head = self.LL2.head
+	def recurs_merge(head1: Node, head2: Node) -> Node:
+		temp = None
 		
 		# If either of the linked lists are empty, return the one thats not empty
-		if LL1_head is None:
-			return self.LL2
-		if LL2_head is None:
-			return self.LL1
+		if head1 == None:
+			return head2
+		if head2 == None:
+			return head1
 
-		if (LL1_head.data < LL2_head.data):
-			LL1_head.next = self.recurs_merge_2LL(LL1_head.next, LL2_head)
-			return self.LL1
+		if head1.data <= head2.data:
+			temp = head1
+			temp.next = Two_LinkedList_Operations.recurs_merge(head1.next, head2)
 		else:
-			LL2_head.next = self.recurs_merge_2LL(LL2_head.next, LL1_head)
-			return self.LL2
+			temp = head2
+			temp.next = Two_LinkedList_Operations.recurs_merge(head1, head2.next)
+
+		return temp
 
 if __name__ == "__main__":
-	print("#---- LL with chars ----#\n")
+	print("\n\n#---- LL with chars ----#")
 	l_l = SLinkedList(nodes = ['a', 'b', 'c', 'd'])
 	l_l.add_first(Node('first'))
 	l_l.add_last(Node('last'))
@@ -211,11 +212,16 @@ if __name__ == "__main__":
 	l_l.remove_node('d')
 	print(l_l.__repr__() + "\n")
 
-	print("#---- LL with ints ----#\n")
+	print("#---- LL with ints ----#")
 	ll2 = SLinkedList(nodes=[1,3,5,7])
 	print(ll2.__repr__())
 	ll3 = SLinkedList(nodes=[2,4,6,8])
-	print(ll3.__repr__() + "\nMerging Linked Lists...\n")
-	ll4 = Two_LinkedList_Operations(ll2, ll3).merge_2LL()
-	print(ll4.__repr__())
+
+	print(ll3.__repr__() + "\n\nMerging Linked Lists in O(m+n) time...")
+	ll4 = Two_LinkedList_Operations(ll2, ll3).merge()
+	print(ll4.__repr__() + "\n")
+
+	ll5_head = Two_LinkedList_Operations.recurs_merge(ll2.head, ll3.head)
+	ll5 = SLinkedList([ll5_head.data]).concat(ll5_head.data, ll5_head)
+	print("Merging Linked Lists Recursively...\n" + ll5.__repr__())
 
