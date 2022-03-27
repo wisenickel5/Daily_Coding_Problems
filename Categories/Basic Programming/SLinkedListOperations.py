@@ -185,22 +185,32 @@ class Two_LinkedList_Operations():
 		return newLL
 
 	def recurs_merge(head1: Node, head2: Node) -> Node:
-		temp = None
-		
-		# If either of the linked lists are empty, return the one thats not empty
+		"""Iterates through each of the nodes passed through, starting with the head node
+		of each of the linked lists (Assuming that the head was passed through).
+		Nodes from each LL are compared in each iteration; the smaller of the two nodes
+		in comparison are incremented with the .next call and recursively passed through the 
+		same function until we have reached the last node in either of the LL (This is the base case).
+
+		Reference: https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+
+		Args:
+			head1 (Node), head2 (Node)
+
+		Returns:
+			Node: Head node of the merged linked list
+		"""
+		# Base Case:If either of the linked lists are empty, return the one thats not empty
 		if head1 == None:
 			return head2
 		if head2 == None:
 			return head1
 
-		if head1.data <= head2.data:
-			temp = head1
-			temp.next = Two_LinkedList_Operations.recurs_merge(head1.next, head2)
+		if head1.data < head2.data:
+			head1.next = Two_LinkedList_Operations.recurs_merge(head1.next, head2)
+			return head1
 		else:
-			temp = head2
-			temp.next = Two_LinkedList_Operations.recurs_merge(head1, head2.next)
-
-		return temp
+			head2.next = Two_LinkedList_Operations.recurs_merge(head1, head2.next)
+			return head2
 
 if __name__ == "__main__":
 	print("\n\n#---- LL with chars ----#")
@@ -221,7 +231,11 @@ if __name__ == "__main__":
 	ll4 = Two_LinkedList_Operations(ll2, ll3).merge()
 	print(ll4.__repr__() + "\n")
 
-	ll5_head = Two_LinkedList_Operations.recurs_merge(ll2.head, ll3.head)
-	ll5 = SLinkedList([ll5_head.data]).concat(ll5_head.data, ll5_head)
-	print("Merging Linked Lists Recursively...\n" + ll5.__repr__())
+	print("Merging Linked Lists Recursively...(Also in O(m+n) time)")
+	ll5 = SLinkedList(nodes=[1,3,5,7])
+	ll6 = SLinkedList(nodes=[2,4,6,8])
+	ll7_head = Two_LinkedList_Operations.recurs_merge(ll5.head, ll6.head)
+	ll7 = SLinkedList([ll7_head.data])
+	ll7.concat(ll7_head.data, ll7_head)
+	print(ll7.__repr__())
 
