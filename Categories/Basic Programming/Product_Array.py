@@ -1,7 +1,9 @@
-# Given an array of integers, return a new array such that 
-# each element at index i of the new array is the product 
-# of all the numbers in the original array except the one at i.
-# Ex. [1, 2, 3, 4, 5] --> [120, 60, 40, 30, 24]
+'''
+Given an array of integers, return a new array such that 
+each element at index i of the new array is the product 
+of all the numbers in the original array except the one at i.
+Ex. [1, 2, 3, 4, 5] --> [120, 60, 40, 30, 24]
+'''
 
 def Product_Array(arr):
     n = len(arr)
@@ -29,20 +31,10 @@ def Product_Array(arr):
     for i in range(n):
         prod[i] = left[i] * right[i]
 
-    # Print the Left array
-    print("Left Array: ")
-    for i in range(n):
-        print(str(left[i]), end=" ")
-
-    # Print the Right array
-    print("\n\nRight Array: ")
-    for i in range(n):
-        print(str(right[i]), end=" ")
-
-    # Print the final array
-    print("\n\nResult Array: ")
-    for i in range(n):
-        print(str(prod[i]), end=" ")
+    # Print the arrays
+    print("Left Array:\n", left)
+    print("\n\nRight Array:\n", right)
+    print("\n\nResult Array:\n", prod)
 
 if __name__ == "__main__":
     arr = [1, 2, 3, 4, 5]
