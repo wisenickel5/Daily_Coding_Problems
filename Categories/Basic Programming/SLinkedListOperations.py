@@ -231,7 +231,7 @@ if __name__ == "__main__":
 	ll4 = Two_LinkedList_Operations(ll2, ll3).merge()
 	print(ll4.__repr__() + "\n")
 
-	print("Merging Linked Lists Recursively...(Also in O(m+n) time)")
+	print("Merging Linked Lists Recursively...(Also O(mn) time)")
 	ll5 = SLinkedList(nodes=[1,3,5,7])
 	ll6 = SLinkedList(nodes=[2,4,6,8])
 	ll7_head = Two_LinkedList_Operations.recurs_merge(ll5.head, ll6.head)

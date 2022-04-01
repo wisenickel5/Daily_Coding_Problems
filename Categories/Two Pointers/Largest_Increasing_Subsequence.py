@@ -30,4 +30,4 @@ if __name__ == "__main__":
 	print("\nArguement Array:\n", arr)
 
 	result = longest_increasing_subsequence(arr)
-	print("Length of longest increasing subsequence", max(result))
+	print("Length of longest increasing subsequence in O(n^2)", max(result))
