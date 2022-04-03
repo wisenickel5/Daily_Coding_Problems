@@ -10,7 +10,6 @@ Reference: https://www.dailycodingproblem.com/blog/longest-increasing-subsequenc
 
 def longest_increasing_subsequence(arr: list[int]) -> list[int]:
 	"""
-	
 	Time complexity: O(n^2) 
 	"""
 	if not arr:
